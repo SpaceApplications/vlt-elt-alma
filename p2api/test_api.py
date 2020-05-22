@@ -15,8 +15,10 @@ def connect():
     return response.json()['access_token']
 
 
+access_token = connect()
+
+
 def make_request(method, url, data=None):
-    access_token = connect()
     url = f'{API_URL}{url}'
     headers = {'Authorization': f'Bearer {access_token}'}
     if data:
