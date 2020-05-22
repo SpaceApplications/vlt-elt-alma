@@ -24,7 +24,7 @@ Example output:
 ========================================= test session starts ==========================================
 platform linux -- Python 3.7.4, pytest-5.4.2, py-1.8.1, pluggy-0.13.1
 rootdir: /home/gpa/dev/p2api_test
-collected 8 items                                                                                                    
+collected 8 items
 
 test_api.py ........                                                                             [100%]
 
