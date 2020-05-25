@@ -31,7 +31,7 @@ Example output:
 ```
 ========================================= test session starts ==========================================
 platform linux -- Python 3.6.9, pytest-5.4.2, py-1.8.1, pluggy-0.13.1
-rootdir: /home/cmi/selenium_almascience
+rootdir: selenium_almascience
 collected 1 item
 
 test_almascience.py .                                                                            [100%]
