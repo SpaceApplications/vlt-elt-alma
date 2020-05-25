@@ -1,40 +1,16 @@
-import json
 import p2api
 import pytest
 import requests
 
-
-BASE_URL = 'https://www.eso.org/copdemo/api'
-API_URL = f'{BASE_URL}/v1'
+from common import API
 
 
-def connect():
-    response = requests.post(
-        f'{BASE_URL}/login',
-        data={'username': '52052', 'password': 'tutorial'})
-    return response.json()['access_token']
-
-
-access_token = connect()
-
-
-def make_request(method, url, data=None):
-    url = f'{API_URL}{url}'
-    headers = {'Authorization': f'Bearer {access_token}'}
-    if data:
-        data = json.dumps(data)
-        return requests.request(method, url, headers=headers, data=data)
-    return requests.request(method, url, headers=headers)
-
-
-def create_observing_block():
-    data = {'itemType': 'OB', 'name': 'dummy observing block'}
-    response = make_request('POST', '/containers/1448455/items', data)
-    return response.json()['obId']
+api = API()
+api.connect()
 
 
 def test_cannot_delete_finding_chart_if_not_authenticated():
-    response = requests.delete(f'{API_URL}/obsBlocks/0/findingCharts/0')
+    response = requests.delete(f'{api.API_URL}/obsBlocks/0/findingCharts/0')
     assert response.status_code == 401
 
 
@@ -42,7 +18,7 @@ def test_cannot_delete_finding_chart_of_invalid_observing_block():
     ob_id = 'invalid'  # invalid observing block ID
     index = 1
 
-    response = make_request(
+    response = api.make_request(
         'DELETE', f'/obsBlocks/{ob_id}/findingCharts/{index}')
 
     assert response.status_code == 400
@@ -50,9 +26,9 @@ def test_cannot_delete_finding_chart_of_invalid_observing_block():
 
 @pytest.mark.parametrize('invalid_index', [('invalid',), (0,), (6,)])
 def test_cannot_delete_invalid_finding_chart(invalid_index):
-    ob_id = create_observing_block();
+    ob_id = api.create_observing_block();
 
-    response = make_request(
+    response = api.make_request(
         'DELETE', f'/obsBlocks/{ob_id}/findingCharts/{invalid_index}')
 
     assert response.status_code == 400
@@ -62,17 +38,17 @@ def test_cannot_delete_finding_chart_of_nonexisting_observing_block():
     ob_id = 0  # non-existing observing block ID
     index = 1
 
-    response = make_request(
+    response = api.make_request(
         'DELETE', f'/obsBlocks/{ob_id}/findingCharts/{index}')
 
     assert response.status_code == 404
 
 
 def test_cannot_delete_nonexisting_finding_chart():
-    ob_id = create_observing_block();
+    ob_id = api.create_observing_block();
     index = 1  # non-existing finding chart index
 
-    response = make_request(
+    response = api.make_request(
         'DELETE', f'/obsBlocks/{ob_id}/findingCharts/{index}')
 
     assert response.status_code == 404

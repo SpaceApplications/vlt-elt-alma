@@ -26,7 +26,7 @@ platform linux -- Python 3.6.9, pytest-5.4.2, py-1.8.1, pluggy-0.13.1
 rootdir: p2api_test
 collected 8 items
 
-test_api.py ........                                                                             [100%]
+test_delete_finding_chart.py ........                                                            [100%]
 
 ========================================== 8 passed in 7.70s ===========================================
 ```
