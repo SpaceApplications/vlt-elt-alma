@@ -30,11 +30,17 @@ Example output:
 
 ```
 ========================================= test session starts ==========================================
-platform linux -- Python 3.6.9, pytest-5.4.2, py-1.8.1, pluggy-0.13.1
+platform linux -- Python 3.7.4, pytest-5.4.2, py-1.8.1, pluggy-0.13.1
 rootdir: selenium_almascience
 collected 1 item
 
 test_almascience.py .                                                                            [100%]
 
 ========================================== 1 passed in 10.75s ==========================================
+```
+
+Use the option `--html=<report name>.html` to generate a HTML report for the test results:
+
+```
+pytest --driver=chrome --ous_id='uid://A002/X639a2a/X2a' --html=results.html
 ```
