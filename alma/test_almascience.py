@@ -25,7 +25,7 @@ def driver(request):
     try:
         yield driver
     finally:
-        driver.close()
+        driver.quit()
 
 
 def test_almascience(request, driver):
@@ -51,10 +51,10 @@ def test_almascience(request, driver):
 
     # Check that we don't have an empty table
     assert len(driver.find_elements_by_class_name('empty-row')) == 0, \
-        'The result set is empty'
+        'The result set should not be empty'
 
     # Check that we have at least one observation
     scroller = driver.find_element_by_tag_name('datatable-scroller')
     assert len(scroller.find_elements_by_tag_name(
         'datatable-row-wrapper')) >= 1, \
-        'There is no rows in the result set'
+        'There should be at least one observation in the result set'
